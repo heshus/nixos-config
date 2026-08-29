@@ -1,0 +1,30 @@
+{ pkgs, zen-browser, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    zsh
+    glib
+    file
+    gcc
+    gnumake
+    pkg-config
+    zellij
+    xwayland-satellite
+    vim
+    wget
+    git
+    zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    stow
+    gnutar
+    gzip
+    zip
+    unzip
+    p7zip
+    unrar
+    file-roller
+    kdePackages.qt6ct
+    libreoffice-stable
+    hunspellDicts.ru_RU
+    hunspellDicts.en_US
+    blueman
+  ];
+}

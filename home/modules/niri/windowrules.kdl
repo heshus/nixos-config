@@ -1,0 +1,71 @@
+// --- Floating / tiling behaviour ---
+window-rule {
+    match app-id=r#"^steam$"# title="^Steam$"
+    match app-id=r#"^pavucontrol$"#
+    match app-id=r#"^nm-connection-editor$"#
+    match app-id="^zen$"
+    default-column-width { proportion 1.0; }
+    open-floating false
+}
+window-rule {
+    match app-id=r#"^org.kde.dolphin"#
+    match app-id=r#"^org\.gnome\.Nautilus$"#
+    match app-id=r#"^xdg-desktop-portal$"#
+    open-floating true
+    default-column-width { proportion 0.5; }
+    default-window-height { proportion 0.6; }
+
+
+}
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"zen$"# title="^Picture-in-Picture$"
+    match app-id=r#"zen$"# title="^Картинка в картинке$"
+    match app-id=r#"zen$"# title="^Требуется пароль - Zen Browser$"
+    match app-id="zoom"
+    open-floating true
+}
+window-rule {
+    match app-id="dev.noctalia.Noctalia"
+    open-floating true
+    default-column-width { fixed 1080; }
+    default-window-height { fixed 920; }
+}
+window-rule {
+  match app-id="foot"
+  match app-id="ghostty"
+  match app-id="kitty"
+  opacity 0.95
+}
+
+
+// --- App -> workspace ---
+window-rule {
+    match app-id="^zen$"
+    open-on-workspace "music"
+}
+window-rule {
+    match app-id="^steam$"
+    open-on-workspace "steam"
+}
+window-rule {
+    match app-id="^dota2$"
+    open-on-workspace "steam"
+}
+window-rule {
+    match app-id="^Spotify$"
+    open-on-workspace "music"
+}
+window-rule {
+    match app-id="^vesktop$"
+    open-on-workspace "chat"
+}
+window-rule {
+    match app-id="^org.telegram.desktop$"
+    open-on-workspace "chat"
+}
+window-rule {
+    match app-id="^com.ayugram.desktop$"
+    open-on-workspace "chat"
+}
+

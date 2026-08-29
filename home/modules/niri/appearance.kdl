@@ -1,0 +1,39 @@
+layer-rule {
+  match namespace="^noctalia-backdrop"
+  place-within-backdrop true
+}
+layer-rule {
+    match namespace="^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
+    background-effect {
+        xray false
+    }
+}
+layer-rule {
+    match namespace="noctalia-window-switcher"
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+blur {
+    passes 3
+    offset 2
+    noise 0.02
+    saturation 1.0
+}
+
+window-rule {
+    background-effect {
+        blur true
+        xray false
+    }
+}
+window-rule {
+    geometry-corner-radius 6
+    clip-to-geometry true
+}
+window-rule {
+    match is-active=false
+    opacity 0.9
+}

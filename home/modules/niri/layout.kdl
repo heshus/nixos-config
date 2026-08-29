@@ -1,0 +1,49 @@
+layout {
+    gaps 8
+    focus-ring {
+        on
+        width 4
+    }
+    border {
+        off
+    }
+
+    tab-indicator {
+        width 6
+        gap 6
+        corner-radius 4
+        length total-proportion=0.8
+
+    }
+    center-focused-column "never"
+    always-center-single-column true
+    preset-column-widths {
+        proportion 0.333
+        proportion 0.5
+        proportion 0.667
+        proportion 1.0
+    }
+    preset-window-heights {
+        proportion 0.333
+        proportion 0.5
+        proportion 0.667
+        proportion 1.0
+    }
+    default-column-width { proportion 0.5; }
+    struts {
+    }
+    shadow {
+    on
+    softness 30
+    spread 6
+    offset x=0 y=5
+    draw-behind-window true
+}
+}
+
+overview {
+    workspace-shadow {
+        on
+    }
+    zoom 0.55
+}
