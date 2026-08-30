@@ -39,8 +39,8 @@
       ltt = "eza --tree --icons=auto";
       cow = "fortune | cowsay | lolcat";
       df = "duf";
-      rebuild = "nh os switch";
-      update  = "nh os switch --update";
+      rebuild = "nh os switch -- --impure";
+      update  = "nh os switch --update -- --impure";
 };
 
     # Функции и всё что не укладывается в готовые опции

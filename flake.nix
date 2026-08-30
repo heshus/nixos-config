@@ -14,7 +14,7 @@
   };
   outputs = { self, nixpkgs, home-manager, zen-browser, ... }@inputs:
     let
-      secrets = import ./secrets.nix;
+      secrets = import /home/heshus/.config/nixos-secrets/secrets.nix;
       mkHost = {
         hostDir,
         gpuModule,
