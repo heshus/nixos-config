@@ -190,6 +190,11 @@
         scope.enabled = true;
 
         indent.char = "│";
+        exclude = {
+              filetypes = [
+                "dashboard"
+              ];
+            };
       };
     };
 
@@ -259,4 +264,3 @@
     };
   };
 }
-

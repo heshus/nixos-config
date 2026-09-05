@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./dashboard.nix
     ./options.nix
     ./plugins.nix
     ./lsp.nix
@@ -9,4 +10,3 @@
     ./theme.nix
   ];
 }
-

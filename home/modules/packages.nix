@@ -9,7 +9,6 @@ ayugram-desktop
 btop
 spotify
 nautilus
-vscodium
 localsend
 vesktop
 cava
