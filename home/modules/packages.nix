@@ -2,7 +2,6 @@
 {
 home.packages = with pkgs;[
 impression
-neovim
 qbittorrent
 obsidian
 zathura
@@ -14,5 +13,6 @@ vscodium
 localsend
 vesktop
 cava
+zed-editor
 ];
 }

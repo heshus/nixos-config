@@ -35,7 +35,9 @@ window-rule {
   match app-id="foot"
   match app-id="ghostty"
   match app-id="kitty"
-  opacity 0.95
+  match is-active=false
+
+  opacity 0.85
 }
 
 
