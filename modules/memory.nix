@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   boot.kernel.sysctl."vm.swappiness" = 100;
   zramSwap = {
     enable = true;
@@ -16,9 +15,9 @@
     }
   ];
 
-  # systemd.oomd = {
-  #   enable = true;
-  #   enableRootSlice = true;
-  #   enableUserSlices = true;
-  # };
+  systemd.oomd = {
+    enable = true;
+    enableRootSlice = true;
+    enableUserSlices = true;
+  };
 }

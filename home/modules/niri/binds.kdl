@@ -25,7 +25,7 @@ XF86MonBrightnessDown hotkey-overlay-title="Brightness Down" {
     Mod+N hotkey-overlay-title="Notification Center" { spawn-sh "noctalia msg panel-toggle control-center notifications"; }
     Mod+V hotkey-overlay-title="Clipboard Manager" { spawn-sh "noctalia msg panel-toggle clipboard"; }
     Mod+Y hotkey-overlay-title="Wallpaper Browser" { spawn-sh "noctalia msg panel-toggle wallpaper"; }
-    Mod+Shift+Y {spawn-sh "noctalia msg panel-toggle tadomika_ari/w-engine:w-engine-panel";}  
+    Mod+Shift+Y {spawn-sh "noctalia msg panel-toggle tadomika_ari/w-engine:w-engine-panel";}
     Mod+A hotkey-overlay-title="Application Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
     XF86AudioPlay hotkey-overlay-title="Media: Play/Pause" { spawn-sh "noctalia msg media toggle"; }
     Alt+Tab hotkey-overlay-title="Window Switcher" { spawn-sh "noctalia msg window-switcher"; }
@@ -148,4 +148,3 @@ XF86MonBrightnessDown hotkey-overlay-title="Brightness Down" {
     Mod+Tab repeat=false { toggle-overview; }
     Super+S repeat=false { toggle-overview; }
 }
-
