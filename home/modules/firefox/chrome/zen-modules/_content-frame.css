@@ -1,0 +1,31 @@
+/* ================================================================
+   ZEN-MODE CONTENT FRAME
+   ================================================================ */
+
+#main-window #tabbrowser-tabpanels browser[type] {
+  margin: var(--zen-content-margin) !important;
+  border-radius: var(--zen-border-radius) !important;
+}
+
+#main-window[inDOMFullscreen="true"] #tabbrowser-tabpanels browser[type],
+#main-window[inFullscreen="true"] #tabbrowser-tabpanels browser[type] {
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+#tabbrowser-tabpanels {
+  background: #000000 !important;
+}
+
+/* Remove the dark gray bezel (#2b2a33) around the content area.
+   Firefox's .browserContainer has a default dark theme background
+   that shows through the 6px margin on the browser element. */
+.browserContainer {
+  background: #000000 !important;
+}
+
+/* Solid black background for blank / new-tab pages */
+browser[type="content-primary"],
+browser[type="content"] {
+  background: #000000 !important;
+}

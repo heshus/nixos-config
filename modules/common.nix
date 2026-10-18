@@ -1,5 +1,8 @@
-{config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./boot.nix
     ./nix.nix
@@ -12,9 +15,8 @@
     ./fonts.nix
     ./gaming.nix
     ./printing.nix
-    ./syncthing.nix
   ];
-  programs.zsh.enable = true; 
+  programs.zsh.enable = true;
   users.users.heshus = {
     isNormalUser = true;
     shell = pkgs.zsh;

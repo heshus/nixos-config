@@ -3,11 +3,12 @@ window-rule {
     match app-id=r#"^steam$"# title="^Steam$"
     match app-id=r#"^pavucontrol$"#
     match app-id=r#"^nm-connection-editor$"#
-    match app-id="^zen$"
+    match app-id="^firefox$"
     default-column-width { proportion 1.0; }
     open-floating false
 }
 window-rule {
+    match app-id="floating-term"
     match app-id=r#"^org.kde.dolphin"#
     match app-id=r#"^org\.gnome\.Nautilus$"#
     match app-id=r#"^xdg-desktop-portal$"#
@@ -19,9 +20,8 @@ window-rule {
 }
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    match app-id=r#"zen$"# title="^Picture-in-Picture$"
-    match app-id=r#"zen$"# title="^Картинка в картинке$"
-    match app-id=r#"zen$"# title="^Требуется пароль - Zen Browser$"
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"firefox$"# title="^Картинка в картинке$"
     match app-id="zoom"
     open-floating true
 }
@@ -33,17 +33,17 @@ window-rule {
 }
 window-rule {
   match app-id="foot"
+  match app-id="floating-term"
   match app-id="ghostty"
   match app-id="kitty"
   match is-active=false
-
   opacity 0.85
 }
 
 
 // --- App -> workspace ---
 window-rule {
-    match app-id="^zen$"
+    match app-id="^firefox$"
     open-on-workspace "music"
 }
 window-rule {
@@ -70,4 +70,3 @@ window-rule {
     match app-id="^com.ayugram.desktop$"
     open-on-workspace "chat"
 }
-

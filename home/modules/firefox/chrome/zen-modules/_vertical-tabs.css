@@ -1,0 +1,201 @@
+/* ================================================================
+   ZEN-MODE VERTICAL TABS (Native FF136+)
+   ================================================================
+   Auto-hide the native vertical tab sidebar. Collapses to a thin
+   strip; expands on hover. Independent from navbar.
+   Vertical tabs are LOCKED to the LEFT side.
+
+   Toggle: Native sidebar expand/collapse (Ctrl+Alt+Z or toolbar btn)
+   :root[sidebar-expand-on-hover]  = Compact mode (autohide)
+   :root:not([sidebar-expand-on-hover]) = Full mode (always visible)
+
+   NOTE: Firefox sets/removes the `sidebar-expand-on-hover` attribute
+   on :root to track mode. We use it for reliable compact/full detection
+   because `sidebar-main[expanded]` flickers during hover expansion.
+   ================================================================ */
+
+@media -moz-pref("sidebar.verticalTabs") {
+
+  /* ===== COMPACT MODE: collapsed sidebar =====
+     The outer XUL box is constrained to 4px wide so the sidebar appears
+     as a thin strip. The inner <sidebar-main> custom element keeps its
+     ~55px geometry via min-width so Firefox's native getMouseTargetRect()
+     hover detection continues to work (it queries the inner element).
+
+     We do NOT use !important on width so the native FLIP animation's
+     inline styles can override it during expand/collapse transitions.
+
+     The collapsed state is transparent; background only shows when
+     expanded or animating, matching native Firefox behavior. */
+  #main-window[sidebar-expand-on-hover]:not([inDOMFullscreen="true"]) #sidebar-main:not([sidebar-launcher-expanded]):not([sidebar-ongoing-animations]) {
+    width: 0px;
+    background: transparent !important;
+    border-right: none !important;
+  }
+
+  /* Keep inner element wide for native hover detection */
+  #main-window[sidebar-expand-on-hover]:not([inDOMFullscreen="true"]) #sidebar-main:not([sidebar-launcher-expanded]):not([sidebar-ongoing-animations]) sidebar-main {
+    min-width: 1.5rem !important;
+  }
+
+  /* Fallback: if sidebar-ongoing-animations gets stuck without expanded,
+     force it collapsed so it doesn't block the viewport. */
+  #main-window[sidebar-expand-on-hover]:not([inDOMFullscreen="true"])
+    #sidebar-main[sidebar-ongoing-animations]:not([sidebar-launcher-expanded]) {
+      width: 0px !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+  }
+
+  /* Expanded / animating: dark background overlay */
+  #main-window[sidebar-expand-on-hover]:not([inDOMFullscreen="true"]) #sidebar-main:is([sidebar-launcher-expanded],[sidebar-ongoing-animations]) {
+    background: var(--zen-bg-base) !important;
+    border-right: 1px solid var(--zen-border) !important;
+  }
+
+  /* Always keep sidebar above content in compact mode */
+  #main-window[sidebar-expand-on-hover]:not([inDOMFullscreen="true"]) #sidebar-main {
+    z-index: 1000;
+    opacity: 1;
+  }
+
+  /* --- Hide the native splitter in compact mode --- */
+  #main-window[sidebar-expand-on-hover] #sidebar-launcher-splitter {
+    display: none !important;
+  }
+
+  /* ===== FULL MODE: tabbar always visible ===== */
+  #main-window:not([sidebar-expand-on-hover]) #sidebar-main {
+    background: var(--zen-bg-base) !important;
+    border-right: 1px solid var(--zen-border) !important;
+    z-index: 1000;
+  }
+
+  /* Style the splitter grip */
+  #sidebar-launcher-splitter {
+    width: 4px !important;
+    background: var(--zen-border) !important;
+    border: none !important;
+    margin: 0 !important;
+  }
+
+  /* ===== COMMON STYLING (both modes) ===== */
+
+  /* Close button: 100% white X, darker background on hover */
+  #sidebar-main .tab-close-button,
+  #sidebar-main .tab-close-button > .toolbarbutton-icon,
+  #sidebar-main .tab-close-button > .toolbarbutton-text,
+  #sidebar-main .tab-close-button > .toolbarbutton-badge-stack {
+    -moz-appearance: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    fill: #ffffff !important;
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+    -moz-context-properties: fill, stroke !important;
+  }
+
+  #sidebar-main .tab-close-button:hover,
+  #sidebar-main .tab-close-button:hover > .toolbarbutton-icon {
+    background: #333333 !important;
+    background-color: #333333 !important;
+    border-radius: 4px !important;
+    fill: #ffffff !important;
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+  }
+
+  /* Tab caption text: white, not blue */
+  #sidebar-main .tab-label-container,
+  #sidebar-main .tab-label-container[selected],
+  #sidebar-main .tab-label {
+    color: var(--zen-text) !important;
+  }
+
+  #sidebar-main .tabbrowser-tab[selected="true"] .tab-label {
+    color: var(--zen-text) !important;
+    font-weight: 500 !important;
+  }
+
+  /* Tab bar container: add top margin for spacing below navbar */
+  #vertical-tabs {
+    margin-top: 1.5rem !important;
+  }
+
+  /* Tab styling within vertical sidebar */
+  #sidebar-main .tabbrowser-tab {
+    min-height: 36px !important;
+    border-radius: 6px !important;
+    margin: 2px 0 !important;
+    padding: 0 8px !important;
+    color: var(--zen-text) !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Remove left/right gap from tab rectangles by offsetting the tab's
+     native XUL padding with negative margin on the inner tab-stack.
+     The <tab> element has intrinsic 8px padding that CSS can't override,
+     so we pull the content outward to compensate. */
+  #sidebar-main .tabbrowser-tab .tab-stack {
+    margin-left: -8px !important;
+    margin-right: -8px !important;
+  }
+
+  /* Active/selected tab: clearly visible darker background, no accent border */
+  #sidebar-main .tabbrowser-tab[selected="true"] {
+    background: #222222 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Prevent any native white/blue pseudo-element indicator on selected tabs */
+  #sidebar-main .tabbrowser-tab[selected="true"] .tab-background::before,
+  #sidebar-main .tabbrowser-tab[selected="true"] .tab-background::after {
+    display: none !important;
+    content: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  #sidebar-main .tabbrowser-tab:hover:not([selected="true"]) {
+    background: var(--zen-bg-hover) !important;
+  }
+
+  #sidebar-main .tab-label-container[selected] {
+    color: #ffffff !important;
+    font-weight: 500 !important;
+  }
+
+  #sidebar-main .tab-label-container:not([selected]) {
+    color: var(--zen-text) !important;
+  }
+
+  /* Hide New Tab button in vertical sidebar */
+  #sidebar-main #new-tab-button,
+  #sidebar-main .new-tab-button,
+  #sidebar-main #tabs-newtab-button,
+  #sidebar-main .tabs-newtab-button,
+  #sidebar-main .newtab-button,
+  #sidebar-main [class*="newtab"],
+  #sidebar-main [id*="newtab"],
+  #sidebar-main toolbarbutton[class*="newtab"],
+  #sidebar-main toolbarbutton[id*="newtab"],
+  #sidebar-main moz-button[label="New Tab"],
+  #sidebar-main [data-l10n-id*="new-tab"],
+  #sidebar-main [data-l10n-id*="newTab"] {
+    display: none !important;
+    visibility: collapse !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Pinned tabs */
+  #sidebar-main .tabbrowser-tab[pinned] .tab-background {
+    background-color: var(--zen-bg-elevated) !important;
+  }
+}

@@ -7,8 +7,8 @@
     ./gtk.nix
     ./fastfetch.nix
     ./media.nix
-    ./vps-tunnel.nix
     ./foot.nix
     ./nvim/default.nix
+    ./firefox/default.nix
   ];
 }

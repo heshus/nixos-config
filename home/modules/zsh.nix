@@ -1,6 +1,8 @@
-{ pkgs,config, ... }:
-
 {
+  pkgs,
+  config,
+  ...
+}: {
   programs.zsh = {
     enable = true;
 
@@ -19,7 +21,7 @@
     # oh-my-zsh
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" ];
+      plugins = ["git" "sudo"];
     };
 
     # Плагины — home-manager сам подставит нужные пакеты, ручной source не нужен
@@ -28,6 +30,7 @@
 
     # Алиасы
     shellAliases = {
+      nv = "nvim";
       mz = "zellij attach -c main";
       clock = "tty-clock -c";
       mpv = "noglob mpv";
@@ -40,8 +43,8 @@
       cow = "fortune | cowsay | lolcat";
       df = "duf";
       rebuild = "nh os switch -- --impure";
-      update  = "nh os switch --update -- --impure";
-};
+      update = "nh os switch --update -- --impure";
+    };
 
     # Функции и всё что не укладывается в готовые опции
     initContent = ''
@@ -100,5 +103,7 @@
     fastfetch
     fd
     mpv
+    gdu
+    dust
   ];
 }

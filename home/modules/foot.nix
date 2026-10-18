@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   programs.foot = {
     enable = true;
     settings = {
@@ -7,7 +7,7 @@
         include = "~/.config/foot/themes/noctalia";
         shell = "zsh";
         login-shell = "yes";
-        font = "JetBrainsMono Nerd Font:size=11";
+        font = "JetBrainsMono Nerd Font:size=13";
         pad = "10x10 center";
         resize-delay-ms = 50;
       };

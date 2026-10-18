@@ -1,4 +1,4 @@
-{ pkgs, zen-browser, ... }:
+{ pkgs,  ... }:
 {
   environment.systemPackages = with pkgs; [
     zsh
@@ -12,7 +12,6 @@
     vim
     wget
     git
-    zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     stow
     gnutar
     gzip

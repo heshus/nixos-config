@@ -1,0 +1,78 @@
+/* ================================================================
+   ZEN-MODE URLBAR
+   ================================================================ */
+
+#urlbar {
+  background: var(--zen-bg-elevated) !important;
+  border: 1px solid var(--zen-border) !important;
+  border-radius: var(--zen-border-radius) !important;
+  color: var(--zen-text) !important;
+  box-shadow: none !important;
+}
+
+#urlbar[focused="true"],
+#urlbar[open="true"] {
+  border-color: var(--zen-accent) !important;
+  background: var(--zen-bg-hover) !important;
+  box-shadow: 0 0 0 2px rgba(74,144,217,0.15) !important;
+}
+
+#urlbar-background,
+.urlbar-background {
+  background: transparent !important;
+  border: none !important;
+}
+
+#urlbar-input,
+#urlbar-input-container {
+  color: var(--zen-text) !important;
+}
+
+/* --- URL bar results dropdown --- */
+.urlbarView {
+  background: var(--zen-bg-elevated) !important;
+  border: 1px solid var(--zen-border) !important;
+  border-radius: var(--zen-border-radius) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
+}
+
+.urlbarView-row {
+  color: var(--zen-text) !important;
+}
+
+.urlbarView-row:hover,
+.urlbarView-row[selected] {
+  background: var(--zen-bg-hover) !important;
+  color: var(--zen-text) !important;
+}
+
+.urlbarView-title {
+  color: var(--zen-text) !important;
+}
+
+.urlbarView-url {
+  color: var(--zen-accent) !important;
+}
+
+/* --- Identity box icons --- */
+#identity-box,
+#tracking-protection-icon-container,
+#page-action-buttons {
+  color: var(--zen-text-muted) !important;
+}
+
+#identity-box:hover,
+#tracking-protection-icon-container:hover {
+  color: var(--zen-text) !important;
+}
+
+/* --- Toolbar buttons in navbar --- */
+#nav-bar toolbarbutton {
+  color: var(--zen-text-muted) !important;
+}
+
+#nav-bar toolbarbutton:hover {
+  color: var(--zen-text) !important;
+  background: var(--zen-bg-hover) !important;
+  border-radius: 6px !important;
+}

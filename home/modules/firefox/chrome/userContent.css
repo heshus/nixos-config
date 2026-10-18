@@ -1,0 +1,46 @@
+/* ================================================================
+   ZEN-MODE userContent.css
+   ================================================================
+   Styles for web content pages (about:blank, about:newtab, etc.)
+   ================================================================ */
+
+/* --- Solid black for blank pages --- */
+@-moz-document url("about:blank") {
+  html, body {
+    background-color: #000000 !important;
+  }
+}
+
+/* --- Solid black for new tab / home pages --- */
+@-moz-document url("about:newtab"), url("about:home") {
+  body {
+    background-color: #000000 !important;
+  }
+
+  .outer-wrapper {
+    background-color: #000000 !important;
+  }
+
+  .newtab-window,
+  .main-container {
+    background-color: #000000 !important;
+  }
+
+  /* Hide the default Firefox logo and shortcuts for a clean black look */
+  .logo-and-wordmark,
+  .search-wrapper .logo-and-wordmark,
+  .non-collapsible-section,
+  .collapsible-section {
+    display: none !important;
+  }
+}
+
+/* --- Solid black for Tridactyl newtab page ---
+   Tridactyl overrides the newtab page with its own moz-extension page.
+   When newtab is set to about:blank, Tridactyl stays on its page but
+   hides the tips content, leaving a dark-gray background from its theme.
+   This forces it to solid black.
+   We exclude .TridactylCommandline (the command-line iframe). */
+html.TridactylOwnNamespace:not(.TridactylCommandline) body {
+  background-color: #000000 !important;
+}

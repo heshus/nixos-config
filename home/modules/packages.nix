@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs,inputs, ...}: {
   home.packages = with pkgs; [
     impression
     qbittorrent
@@ -6,11 +6,10 @@
     zathura
     ayugram-desktop
     btop
-    spotify
     nautilus
-    localsend
     vesktop
     cava
+    spotify
     zed-editor
   ];
 }

@@ -1,0 +1,38 @@
+/* ================================================================
+   ZEN-MODE BOOKMARK BAR
+   ================================================================
+   The bookmark bar is hidden by default via Firefox's native
+   collapsed state. When the user toggles it (Ctrl+Shift+B or via
+   the menu), it appears styled to match the dark zen theme.
+   ================================================================ */
+
+#PersonalToolbar {
+  background: var(--zen-bg-base) !important;
+  border-bottom: 1px solid var(--zen-border) !important;
+  color: var(--zen-text) !important;
+  padding-inline: 6px !important;
+}
+
+#PersonalToolbar .bookmark-item {
+  color: var(--zen-text) !important;
+  border-radius: 6px !important;
+  padding: 2px 8px !important;
+  margin-inline: 2px !important;
+}
+
+#PersonalToolbar .bookmark-item:hover {
+  background: var(--zen-bg-hover) !important;
+  color: var(--zen-text) !important;
+}
+
+#PersonalToolbar toolbarbutton.bookmark-item[open="true"] {
+  background: var(--zen-bg-active) !important;
+}
+
+#PersonalToolbar toolbarseparator {
+  border-color: var(--zen-border) !important;
+}
+
+#PersonalToolbar #bookmarks-toolbar-placeholder {
+  color: var(--zen-text-muted) !important;
+}

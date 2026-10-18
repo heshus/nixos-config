@@ -1,9 +1,6 @@
-{ ... }:
-
-{
+{...}: {
   programs.nixvim = {
     keymaps = [
-
       # ╭──────────────────────────────────────────╮
       # │ General                                  │
       # ╰──────────────────────────────────────────╯
@@ -219,7 +216,7 @@
       # ╰──────────────────────────────────────────╯
 
       {
-        mode = [ "n" "x" "o" ];
+        mode = ["n" "x" "o"];
         key = "s";
         action = "<cmd>lua require('flash').jump()<CR>";
         options.desc = "Flash jump";
@@ -316,48 +313,6 @@
           source = "if_many",
         },
       })
-
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(args)
-          local opts = { buffer = args.buf }
-
-          vim.keymap.set(
-            "n",
-            "K",
-            vim.lsp.buf.hover,
-            opts
-          )
-
-          vim.keymap.set(
-            "n",
-            "gd",
-            vim.lsp.buf.definition,
-            opts
-          )
-
-          vim.keymap.set(
-            "n",
-            "gr",
-            vim.lsp.buf.references,
-            opts
-          )
-
-          vim.keymap.set(
-            "n",
-            "<leader>la",
-            vim.lsp.buf.code_action,
-            opts
-          )
-
-          vim.keymap.set(
-            "n",
-            "<leader>lr",
-            vim.lsp.buf.rename,
-            opts
-          )
-        end,
-      })
     '';
   };
 }
-

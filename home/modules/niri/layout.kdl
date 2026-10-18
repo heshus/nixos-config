@@ -1,8 +1,8 @@
 layout {
-    gaps 8
+    gaps 12
     focus-ring {
         on
-        width 4
+        width 2
     }
     border {
         off
@@ -45,5 +45,5 @@ overview {
     workspace-shadow {
         on
     }
-    zoom 0.55
+    zoom 0.6
 }

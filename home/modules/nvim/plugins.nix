@@ -1,8 +1,5 @@
-{ ... }:
-
-{
+{...}: {
   programs.nixvim.plugins = {
-
     # ─────────────────────────────────────────────
     # Completion
     # ─────────────────────────────────────────────
@@ -15,9 +12,9 @@
         preselect = "none";
 
         sources = [
-          { name = "nvim_lsp"; }
-          { name = "path"; }
-          { name = "buffer"; }
+          {name = "nvim_lsp";}
+          {name = "path";}
+          {name = "buffer";}
         ];
 
         mapping = {
@@ -94,8 +91,38 @@
       enable = true;
 
       extensions.fzf-native.enable = true;
-    };
 
+      settings = {
+        defaults = {
+          # для live_grep (rg)
+          vimgrep_arguments = [
+            "rg"
+            "--color=never"
+            "--no-heading"
+            "--with-filename"
+            "--line-number"
+            "--column"
+            "--smart-case"
+            "--hidden" # показывать скрытые файлы
+          ];
+        };
+
+        pickers = {
+          find_files = {
+            hidden = true; # показывать скрытые файлы
+            # для find_files (fd)
+            find_command = [
+              "fd"
+              "--type"
+              "f"
+              "--hidden"
+              "--exclude"
+              ".git"
+            ];
+          };
+        };
+      };
+    };
     # ─────────────────────────────────────────────
     # File tree
     # ─────────────────────────────────────────────
@@ -191,10 +218,10 @@
 
         indent.char = "│";
         exclude = {
-              filetypes = [
-                "dashboard"
-              ];
-            };
+          filetypes = [
+            "dashboard"
+          ];
+        };
       };
     };
 
@@ -212,9 +239,9 @@
       enable = true;
 
       modules = {
-        ai = { };
-        pairs = { };
-        surround = { };
+        ai = {};
+        pairs = {};
+        surround = {};
 
         comment = {
           mappings = {
@@ -248,12 +275,12 @@
 
       settings = {
         formatters_by_ft = {
-          rust = [ "rustfmt" ];
-          python = [ "ruff_format" ];
-          nix = [ "alejandra" ];
-          c = [ "clang_format" ];
-          cpp = [ "clang_format" ];
-          lua = [ "stylua" ];
+          rust = ["rustfmt"];
+          python = ["ruff_format"];
+          nix = ["alejandra"];
+          c = ["clang_format"];
+          cpp = ["clang_format"];
+          lua = ["stylua"];
         };
 
         format_on_save = {

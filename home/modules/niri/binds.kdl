@@ -16,8 +16,6 @@ XF86MonBrightnessDown hotkey-overlay-title="Brightness Down" {
     XF86AudioLowerVolume hotkey-overlay-title="Volume Down" { spawn-sh "noctalia msg volume-down"; }
     XF86AudioMute hotkey-overlay-title="Mute" { spawn-sh "noctalia msg volume-mute"; }
     XF86AudioMicMute hotkey-overlay-title="Mic Mute" { spawn-sh "noctalia msg mic-mute"; }
-    Ctrl+Alt+Delete hotkey-overlay-title="spawn btop" { spawn "foot" "-e" "btop"; }
-    Mod+Shift+B hotkey-overlay-title="spawn btop" { spawn "foot" "-e" "btop"; }
     Mod+O hotkey-overlay-title="Control Center" { spawn-sh "noctalia msg panel-toggle control-center"; }
     Mod+Shift+O hotkey-overlay-title="Session Menu" { spawn-sh "noctalia msg panel-toggle session"; }
     Mod+Alt+L hotkey-overlay-title="Lock Screen" { spawn-sh "noctalia msg session lock"; }
@@ -28,7 +26,6 @@ XF86MonBrightnessDown hotkey-overlay-title="Brightness Down" {
     Mod+Shift+Y {spawn-sh "noctalia msg panel-toggle tadomika_ari/w-engine:w-engine-panel";}
     Mod+A hotkey-overlay-title="Application Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
     XF86AudioPlay hotkey-overlay-title="Media: Play/Pause" { spawn-sh "noctalia msg media toggle"; }
-    Alt+Tab hotkey-overlay-title="Window Switcher" { spawn-sh "noctalia msg window-switcher"; }
     // --- Workspaces ---
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
@@ -135,15 +132,18 @@ XF86MonBrightnessDown hotkey-overlay-title="Brightness Down" {
     Mod+Shift+P { power-off-monitors; }
 
     // --- Apps ---
-    Super+B { spawn "zen"; }
+    Super+B { spawn "firefox"; }
     Super+E { spawn "nautilus"; }
     Super+M { spawn "spotify"; }
     Super+Return hotkey-overlay-title="Open Terminal" { spawn "foot"; }
     Super+T hotkey-overlay-title="Open Terminal" { spawn "foot"; }
+    Super+Shift+Return {spawn "foot" "--app-id=floating-term";}
+    Super+Shift+T {spawn "foot" "--app-id=floating-term";}
 
+    Ctrl+Alt+Delete hotkey-overlay-title="Open btop" {spawn "foot" "--app-id=floating-term" "-e" "btop";}
+    Mod+Shift+B hotkey-overlay-title="Open btop" {spawn "foot" "--app-id=floating-term" "-e" "btop";}
     // --- Misc ---
     Mod+Escape { toggle-keyboard-shortcuts-inhibit; }
-    Mod+Shift+Slash { spawn "noctalia" "msg" "panel-toggle" "kenn/keybind-cheatsheet:cheatsheet"; }
     Mod+Shift+E { quit; }
     Mod+Tab repeat=false { toggle-overview; }
     Super+S repeat=false { toggle-overview; }

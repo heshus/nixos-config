@@ -1,14 +1,15 @@
 {
   description = "linux-porno";
   inputs = {
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    grub2-themes.url = "github:vinceliuice/grub2-themes";
     nixvim.url = "github:nix-community/nixvim";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    zen-browser = {
-      url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -16,11 +17,10 @@
     self,
     nixpkgs,
     home-manager,
-    zen-browser,
     nixvim,
+    grub2-themes,
     ...
   } @ inputs: let
-    secrets = import /home/heshus/.config/nixos-secrets/secrets.nix;
     mkHost = {
       hostDir,
       gpuModule,
@@ -29,23 +29,24 @@
       nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
-          inherit inputs zen-browser secrets;
+          inherit inputs;
         };
         modules =
           [
             ./modules/common.nix
             gpuModule
             ./hosts/${hostDir}/configuration.nix
+            grub2-themes.nixosModules.default
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {
-                inherit inputs secrets;
-              };
               home-manager.sharedModules = [
                 inputs.nixvim.homeModules.nixvim
               ];
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+              };
               home-manager.users.heshus = import ./home/home.nix;
             }
           ]

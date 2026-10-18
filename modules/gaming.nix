@@ -11,7 +11,6 @@
 
   environment.systemPackages = with pkgs; [
     mangohud
-    prismlauncher
   ];
   hardware.xpadneo.enable = true;
 }
