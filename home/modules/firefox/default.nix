@@ -24,7 +24,6 @@ in
   programs.firefox = {
     enable = true;
 
-    # Установка русского интерфейса
     languagePacks = [ "ru" ];
 
     policies = {
@@ -74,8 +73,6 @@ in
       name = "default";
       isDefault = true;
 
-      # userChrome/userContent НЕ задаём здесь: вся папка chrome/ кладётся
-      # через home.file ниже (тема Malevich подключает модули через @import).
 
       settings = {
         # ───────── Язык и интерфейс ─────────
@@ -90,10 +87,8 @@ in
 
         # ───────── Запуск и новая вкладка ─────────
         "browser.aboutConfig.showWarning" = false;
-        # При запуске: пустая страница. Новая вкладка (Ctrl+T): твои закреплённые сайты.
-        "browser.startup.page" = 0;
-        "browser.startup.homepage" = "chrome://browser/content/blanktab.html";
-        "browser.newtabpage.activity-stream.topSitesRows" = 3;
+        "browser.startup.page" = 1;
+        "browser.newtabpage.activity-stream.topSitesRows" = 2;
         "browser.newtabpage.pinned" = builtins.toJSON pinned;
         "browser.newtabpage.activity-stream.showSponsored" = false;
         "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
@@ -125,22 +120,16 @@ in
         "browser.safebrowsing.downloads.remote.enabled" = false;
         "browser.safebrowsing.downloads.remote.url" = "";
 
-        # ───────── Нативные вертикальные вкладки и сайдбар (для Malevich) ─────────
-        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        # ───────── Нативные вертикальные вкладки и сайдбар ─────────
         "sidebar.revamp" = true;
         "sidebar.revamp.defaultLauncherVisible" = false;
         "sidebar.verticalTabs" = true;
         "sidebar.position_start" = true;
         "sidebar.visibility" = "expand-on-hover";
-        "sidebar.animation.expand-on-hover.duration-ms" = 130;
-        "sidebar.animation.expand-on-hover.delay-duration-ms" = 65;
         "sidebar.main.tools" = "history,bookmarks";
         "browser.sidebar.useCurrentTab" = true;
         "browser.sidebar.moveOnResize" = false;
         "browser.sidebar.width" = 280;
-        "browser.sidebar.panels.animations" = false;
-        "browser.tabs.allowAnimationPreference" = false;
-        "browser.tabs.animate" = false;
         "browser.bookmarks.showMobileBookmarks" = false;
         "browser.bookmarks.showDesktopBookmarks" = false;
 
@@ -274,29 +263,13 @@ in
         "permissions.default.geo" = 2;
 
         # ───────── Поведение интерфейса ─────────
-        "browser.fullscreen.animateUp" = 0;
-        "full-screen-api.transition-duration.enter" = "0 0";
-        "full-screen-api.transition-duration.leave" = "0 0";
-        "apz.overscroll.enabled" = false;
         "browser.compactmode.show" = true;
-        "browser.profiles.enabled" = true;
         "browser.tabs.closeWindowWithLastTab" = false;
-        "browser.tabs.drawInTitlebar" = false;
-        "browser.tabs.tabClipWidth" = 110;
-        "browser.tabs.tabMaxWidth" = 160;
         "browser.toolbars.bookmarks.visibility" = "never";
         "browser.download.autohideButton" = false;
-        "browser.chrome.site_icons" = false;
+        "browser.chrome.site_icons" = true;
 
-        # ───────── Тёмная тема ─────────
-        "browser.theme.content-theme" = 0;
-        "browser.theme.toolbar-theme" = 0;
-        "browser.theme.dark-private-windows" = false;
-        "browser.display.background_color" = "#000000";
-        "browser.display.background_color.dark" = "#000000";
-        "layout.css.prefers-color-scheme.content-override" = 0;
-        "ui.systemUsesDarkTheme" = 1;
-        "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
+
 
         # ───────── WebRTC / медиа ─────────
         "media.peerconnection.ice.proxy_only_if_behind_proxy" = true;
@@ -358,10 +331,6 @@ in
         "services.sync.engine.addresses" = false;
         "services.sync.engine.creditcards" = false;
 
-        "browser.translations.enable" = false;
-        "browser.translations.autoTranslate" = false;
-        "browser.translations.ui.enabled" = false;
-
         "extensions.pocket.enabled" = false;
         "extensions.pocket.oAuthConsumerKey" = "";
         "extensions.pocket.api" = "";
@@ -417,20 +386,12 @@ in
           protondb-for-steam
           to-google-translate
           vimium
-          # adaptive-tab-bar-colour  # с Malevich не нужен: вкладки скрыты, тема тёмная
           search-by-image
         ];
       };
     };
   };
 
-  # Тема Malevich: локальная копия папки chrome/ лежит рядом с этим файлом.
-  # Путь профиля: ~/.mozilla/firefox/default/. Если у тебя профили лежат в
-  # ~/.config/mozilla/firefox/, поправь путь.
-  home.file.".mozilla/firefox/default/chrome" = {
-    source = ./chrome;
-    recursive = true;
-  };
 
   xdg.mimeApps = {
     enable = true;

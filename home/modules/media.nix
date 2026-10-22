@@ -16,10 +16,9 @@
       hwdec = "auto";
       ytdl-format = "bestvideo+bestaudio/best";
       ytdl-raw-options =
-        "cookies-from-browser=firefox:${config.home.homeDirectory}/.config/zen/v9k9clgw.Default (release)";
+        "cookies-from-browser=firefox:${config.home.homeDirectory}/.config/mozilla/firefox/default";
       save-position-on-quit = true;
       keep-open = true;
     };
   };
 }
-

@@ -18,9 +18,9 @@ layer-rule {
 
 blur {
     passes 3
-    offset 2
+    offset 4
     noise 0.02
-    saturation 1.0
+    saturation 1.6
 }
 
 window-rule {
