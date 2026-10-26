@@ -3,6 +3,7 @@
 let
   addons = inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system};
 
+  # Sites pinned on the new tab page
   pinned = [
     { url = "https://www.youtube.com/"; title = "YouTube"; }
     { url = "https://mail.google.com/mail/u/0/#inbox"; title = "Gmail"; }
@@ -26,22 +27,28 @@ in
 
     languagePacks = [ "ru" ];
 
+    # ════════════════════════════════════════════════════════════════
+    #  POLICIES (enterprise policies, applied to the whole browser)
+    # ════════════════════════════════════════════════════════════════
     policies = {
+      # --- Telemetry and junk ---
       DisableTelemetry = true;
       DisableFirefoxStudies = true;
       DisablePocket = true;
       NoDefaultBookmarks = true;
-
-      # Из example_user.js (раньше это делал policies.json). Мягкий DoH: VPN у тебя то вкл., то выкл.
       DisableFormHistory = true;
       DontCheckDefaultBrowser = true;
+
+      # --- Security ---
       HttpsOnlyMode = "enabled";
 
+      # Soft DoH: your VPN is sometimes on and sometimes off,
+      # so Firefox falls back to normal DNS if DoH is not reachable.
       DNSOverHTTPS = {
         Enabled = true;
         ProviderURL = "https://dns.adguard-dns.com/dns-query";
-        Locked = false; # можно менять в настройках Firefox
-        Fallback = true; # если DoH недоступен (например, при смене VPN), откат на обычный DNS
+        Locked = false; # you can still change it in Firefox settings
+        Fallback = true;
       };
 
       EnableTrackingProtection = {
@@ -50,6 +57,7 @@ in
         Fingerprinting = true;
       };
 
+      # --- Home page and messages ---
       FirefoxHome = {
         Search = true;
         TopSites = true;
@@ -68,59 +76,42 @@ in
       };
     };
 
+    # ════════════════════════════════════════════════════════════════
+    #  PROFILE
+    # ════════════════════════════════════════════════════════════════
     profiles.default = {
       id = 0;
       name = "default";
       isDefault = true;
 
-
+      # ──────────────────────────────────────────────────────────────
+      #  SETTINGS (about:config)
+      # ──────────────────────────────────────────────────────────────
       settings = {
-        # ───────── Язык и интерфейс ─────────
+
+        # ───────── General: language and basic behavior ─────────
         "intl.locale.requested" = "ru,en-US";
         "browser.ctrlTab.sortByRecentlyUsed" = true;
         "general.autoScroll" = true;
         "findbar.highlightAll" = true;
+        "browser.aboutConfig.showWarning" = false;
+        "browser.shell.checkDefaultBrowser" = false;
 
-        # ───────── Шрифты сайтов ─────────
+        # ───────── Fonts ─────────
         "font.name.sans-serif.x-cyrillic" = "Roboto";
         "font.name.sans-serif.x-western" = "Roboto";
 
-        # ───────── Запуск и новая вкладка ─────────
-        "browser.aboutConfig.showWarning" = false;
+        # ───────── Startup and new tab ─────────
         "browser.startup.page" = 1;
-        "browser.newtabpage.activity-stream.topSitesRows" = 2;
         "browser.newtabpage.pinned" = builtins.toJSON pinned;
+        "browser.newtabpage.activity-stream.topSitesRows" = 2;
         "browser.newtabpage.activity-stream.showSponsored" = false;
         "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
         "browser.newtabpage.activity-stream.showSponsoredCheckboxes" = false;
         "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
         "browser.newtab.preload" = false;
-        "browser.shell.checkDefaultBrowser" = false;
 
-        # ───────── Геолокация ─────────
-        "geo.provider.ms-windows-location" = false;
-        "geo.provider.use_corelocation" = false;
-        "geo.provider.use_geoclue" = false;
-
-        # ───────── Тишина: отчёты, рекомендации, фоновые запросы ─────────
-        "extensions.getAddons.showPane" = false;
-        "extensions.htmlaboutaddons.recommendations.enabled" = false;
-        "browser.discovery.enabled" = false;
-        "browser.newtabpage.activity-stream.feeds.telemetry" = false;
-        "browser.newtabpage.activity-stream.telemetry" = false;
-        "app.shield.optoutstudies.enabled" = false;
-        "app.normandy.enabled" = false;
-        "app.normandy.api_url" = "";
-        "breakpad.reportURL" = "";
-        "browser.tabs.crashReporting.sendReport" = false;
-        "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
-        "captivedetect.canonicalURL" = "";
-        "network.captive-portal-service.enabled" = false;
-        "network.connectivity-service.enabled" = false;
-        "browser.safebrowsing.downloads.remote.enabled" = false;
-        "browser.safebrowsing.downloads.remote.url" = "";
-
-        # ───────── Нативные вертикальные вкладки и сайдбар ─────────
+        # ───────── Sidebar and vertical tabs ─────────
         "sidebar.revamp" = true;
         "sidebar.revamp.defaultLauncherVisible" = false;
         "sidebar.verticalTabs" = true;
@@ -130,24 +121,25 @@ in
         "browser.sidebar.useCurrentTab" = true;
         "browser.sidebar.moveOnResize" = false;
         "browser.sidebar.width" = 280;
+
+        # ───────── Interface behavior ─────────
+        "browser.compactmode.show" = true;
+        "browser.tabs.closeWindowWithLastTab" = false;
+        "browser.chrome.site_icons" = true;
+        "browser.link.open_newwindow.restriction" = 0;
+        "browser.menu.showViewImageInfo" = true;
+        "browser.tabs.searchclipboardfor.middleclick" = false;
+        "layout.word_select.eat_space_to_next_word" = false;
+        "dom.disable_window_move_resize" = true;
+
+        # ───────── Bookmarks ─────────
         "browser.bookmarks.showMobileBookmarks" = false;
         "browser.bookmarks.showDesktopBookmarks" = false;
+        "browser.bookmarks.openInTabClosesMenu" = false;
+        "browser.toolbars.bookmarks.visibility" = "never";
 
-        # ───────── Без неявных исходящих соединений ─────────
-        "network.prefetch-next" = false;
-        "network.dns.disablePrefetch" = true;
-        "network.dns.disablePrefetchFromHTTPS" = true;
-        "network.http.speculative-parallel-limit" = 0;
-        "browser.places.speculativeConnect.enabled" = false;
-
-        # ───────── DNS / прокси (DoH в мягком режиме задан в policies) ─────────
-        "network.proxy.socks_remote_dns" = true;
-        "network.file.disable_unc_paths" = true;
-        "network.gio.supported-protocols" = "";
-        "network.dnsCacheEntries" = 10000;
-        "network.dnsCacheExpiration" = 3600;
-
-        # ───────── Адресная строка и поиск ─────────
+        # ───────── Address bar and search ─────────
+        # Turn off sponsored and extra suggestions
         "browser.urlbar.speculativeConnect.enabled" = false;
         "browser.urlbar.quicksuggest.enabled" = false;
         "browser.urlbar.suggest.quicksuggest.nonsponsored" = false;
@@ -165,7 +157,8 @@ in
         "browser.urlbar.clipboard.featureGate" = false;
         "browser.urlbar.trimHttps" = true;
         "browser.urlbar.untrimOnUserInteraction.featureGate" = true;
-        # Подсказки поисковика (Google) включены
+
+        # Search engine suggestions (Google) stay on
         "browser.search.suggest.enabled" = true;
         "browser.urlbar.suggest.searches" = true;
         "browser.urlbar.suggest.engines" = true;
@@ -176,13 +169,55 @@ in
         "browser.search.separatePrivateDefault" = true;
         "browser.search.separatePrivateDefault.ui.enabled" = true;
 
-        # ───────── Пароли и формы (встроенный менеджер Firefox работает как обычно) ─────────
+        # ───────── Passwords and forms ─────────
+        # The built-in Firefox password manager works as usual
         "signon.autologin.proxy" = false;
         "signon.management.page.breach-alerts.enabled" = false;
         "network.auth.subresource-http-auth-allow" = 1;
         "browser.formfill.enable" = false;
 
-        # ───────── Кэш: диск выключен, всё в RAM ─────────
+        # ───────── Downloads ─────────
+        "browser.download.open_pdf_attachments_inline" = true;
+        "pdfjs.enableScripting" = false;
+        "browser.download.useDownloadDir" = true; # save to Downloads, don't ask
+        "browser.download.alwaysOpenPanel" = false;
+        "browser.download.always_ask_before_handling_new_types" = false;
+        "browser.download.autohideButton" = false;
+        "browser.download.manager.addToRecentDocs" = false;
+        "browser.helperApps.deleteTempFileOnExit" = true;
+
+        # ───────── Extensions ─────────
+        # Needed so extensions from Nix are enabled automatically
+        "extensions.autoDisableScopes" = 0;
+        "extensions.postDownloadThirdPartyPrompt" = false;
+        "extensions.blocklist.enabled" = true;
+        "extensions.webcompat.enable_shims" = true;
+        "extensions.webcompat-reporter.enabled" = false;
+        "extensions.quarantinedDomains.enabled" = true;
+        "extensions.getAddons.showPane" = false;
+        "extensions.htmlaboutaddons.recommendations.enabled" = false;
+
+        # ───────── Network: no hidden connections ─────────
+        "network.prefetch-next" = false;
+        "network.dns.disablePrefetch" = true;
+        "network.dns.disablePrefetchFromHTTPS" = true;
+        "network.http.speculative-parallel-limit" = 0;
+        "browser.places.speculativeConnect.enabled" = false;
+        "captivedetect.canonicalURL" = "";
+        "network.captive-portal-service.enabled" = false;
+        "network.connectivity-service.enabled" = false;
+        "browser.safebrowsing.downloads.remote.enabled" = false;
+        "browser.safebrowsing.downloads.remote.url" = "";
+
+        # ───────── Network: DNS and proxy ─────────
+        # Soft DoH is set in policies above
+        "network.proxy.socks_remote_dns" = true;
+        "network.file.disable_unc_paths" = true;
+        "network.gio.supported-protocols" = "";
+        "network.dnsCacheEntries" = 10000;
+        "network.dnsCacheExpiration" = 3600;
+
+        # ───────── Cache: no disk cache, everything in RAM ─────────
         "browser.cache.disk.enable" = false;
         "browser.cache.memory.capacity" = 262144;
         "browser.privatebrowsing.forceMediaMemoryCache" = true;
@@ -192,7 +227,7 @@ in
         "browser.sessionstore.max_tabs_undo" = 10;
         "browser.shell.shortcutFavicons" = false;
 
-        # ───────── Производительность ─────────
+        # ───────── Performance ─────────
         "browser.sessionstore.interval" = 60000;
         "browser.tabs.unloadOnLowMemory" = true;
         "browser.tabs.min_inactive_duration_before_unload" = 300000;
@@ -200,10 +235,9 @@ in
         "network.http.max-persistent-connections-per-server" = 10;
         "network.http.pacing.requests.enabled" = false;
         "network.ssl_tokens_cache_capacity" = 10240;
-        "browser.helperApps.deleteTempFileOnExit" = true;
-        "browser.download.manager.addToRecentDocs" = false;
 
-        # ───────── HTTPS / TLS / сертификаты (HTTPS-Only задан в policies) ─────────
+        # ───────── HTTPS, TLS and certificates ─────────
+        # HTTPS-Only mode is set in policies above
         "security.ssl.enable_ocsp_stapling" = true;
         "security.ssl.treat_unsafe_negotiation_as_broken" = true;
         "security.ssl.require_safe_negotiation" = true;
@@ -214,85 +248,50 @@ in
         "security.cert_pinning.enforcement_level" = 2;
         "security.remote_settings.crlite_filters.enabled" = true;
         "security.pki.crlite_mode" = 2;
+        "security.dialog_enable_delay" = 1000;
+        "network.IDN_show_punycode" = true;
         "dom.security.https_only_mode_error_page_user_suggestions" = true;
         "dom.security.https_only_mode_send_http_background_request" = false;
 
-        # ───────── Загрузки ─────────
-        "browser.download.open_pdf_attachments_inline" = true;
-        "pdfjs.enableScripting" = false;
-        "browser.download.useDownloadDir" = true; # сразу в «Загрузки», без вопросов
-        "browser.download.alwaysOpenPanel" = false;
-        "browser.download.always_ask_before_handling_new_types" = false;
-
-        # ───────── Расширения ─────────
-        # Нужен, чтобы расширения из Nix включались автоматически
-        "extensions.autoDisableScopes" = 0;
-        "extensions.postDownloadThirdPartyPrompt" = false;
-
-        # ───────── DOM / прочее ─────────
-        "dom.disable_window_move_resize" = true;
-        "permissions.manager.defaultsUrl" = "";
-        "network.IDN_show_punycode" = true;
-        "browser.tabs.searchclipboardfor.middleclick" = false;
-        "browser.contentanalysis.enabled" = false;
-        "browser.contentanalysis.default_result" = 0;
-        "security.csp.reporting.enabled" = false;
+        # ───────── Privacy: tracking protection ─────────
+        "browser.contentblocking.category" = "strict";
+        "privacy.globalprivacycontrol.enabled" = true;
+        "privacy.sanitize.timeSpan" = 0;
+        "privacy.firstparty.isolate" = false;
         "privacy.antitracking.isolateContentScriptResources" = true;
-        "browser.link.open_newwindow.restriction" = 0;
         "browser.privateWindowSeparation.enabled" = false;
-        "browser.bookmarks.openInTabClosesMenu" = false;
-        "browser.menu.showViewImageInfo" = true;
-        "layout.word_select.eat_space_to_next_word" = false;
 
-        # ───────── Referer ─────────
+        # ───────── Privacy: containers ─────────
+        "privacy.userContext.enabled" = true;
+        "privacy.userContext.ui.enabled" = true;
+        "privacy.partition.network_state.ocsp_cache" = true;
+
+        # ───────── Privacy: referer ─────────
         "network.http.referer.XOriginTrimmingPolicy" = 2;
         "network.http.referer.defaultPolicy" = 2;
         "network.http.referer.defaultPolicy.pbmode" = 2;
         "network.http.referer.disallowCrossSiteRelaxingDefault" = true;
         "network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation" = true;
+        "network.http.referer.spoofSource" = false;
 
-        # ───────── Контейнеры / изоляция ─────────
-        "privacy.userContext.enabled" = true;
-        "privacy.userContext.ui.enabled" = true;
-        "privacy.partition.network_state.ocsp_cache" = true;
-
-        # ───────── Разрешения сайтов ─────────
-        # Камера и микрофон: обычный запрос разрешения (нужны для Discord/Meet).
-        # Уведомления и геолокация заблокированы; разрешать вручную через замочек.
+        # ───────── Site permissions ─────────
+        # Camera and microphone: normal permission prompt (needed for Discord/Meet).
+        # Notifications and location are blocked; allow them by hand via the lock icon.
         "permissions.default.desktop-notification" = 2;
         "permissions.default.geo" = 2;
+        "permissions.manager.defaultsUrl" = "";
+        "geo.provider.ms-windows-location" = false;
+        "geo.provider.use_corelocation" = false;
+        "geo.provider.use_geoclue" = false;
 
-        # ───────── Поведение интерфейса ─────────
-        "browser.compactmode.show" = true;
-        "browser.tabs.closeWindowWithLastTab" = false;
-        "browser.toolbars.bookmarks.visibility" = "never";
-        "browser.download.autohideButton" = false;
-        "browser.chrome.site_icons" = true;
-
-
-
-        # ───────── WebRTC / медиа ─────────
+        # ───────── WebRTC and media ─────────
         "media.peerconnection.ice.proxy_only_if_behind_proxy" = true;
         "media.getusermedia.screensharing.allowed_domains" = "";
-        # Автовоспроизведение: настройки Firefox по умолчанию (специально не трогаем).
-        # ВАЖНО: "media.volume_scale" = "0.0" из оригинального файла убран,
-        # он выставляет громкость всех медиа в ноль.
+        # Autoplay: Firefox defaults (left untouched on purpose).
+        # NOTE: "media.volume_scale" = "0.0" from the old file was removed,
+        # because it sets the volume of all media to zero.
 
-        # ───────── Защита от отслеживания ─────────
-        "browser.contentblocking.category" = "strict";
-        "privacy.globalprivacycontrol.enabled" = true;
-        "privacy.sanitize.timeSpan" = 0;
-
-        # ───────── Базовое (не трогать) ─────────
-        "extensions.blocklist.enabled" = true;
-        "network.http.referer.spoofSource" = false;
-        "security.dialog_enable_delay" = 1000;
-        "privacy.firstparty.isolate" = false;
-        "extensions.webcompat.enable_shims" = true;
-        "extensions.webcompat-reporter.enabled" = false;
-        "extensions.quarantinedDomains.enabled" = true;
-
-        # ───────── Телеметрия: полностью выключена ─────────
+        # ───────── Telemetry and reports: fully off ─────────
         "datareporting.policy.dataSubmissionEnabled" = false;
         "datareporting.healthreport.uploadEnabled" = false;
         "datareporting.usage.uploadEnabled" = false;
@@ -310,10 +309,22 @@ in
         "toolkit.coverage.endpoint.base" = "";
         "toolkit.telemetry.dap_enabled" = false;
         "dom.private-attribution.submission.enabled" = false;
+        "browser.newtabpage.activity-stream.feeds.telemetry" = false;
+        "browser.newtabpage.activity-stream.telemetry" = false;
+        "app.shield.optoutstudies.enabled" = false;
+        "app.normandy.enabled" = false;
+        "app.normandy.api_url" = "";
+        "breakpad.reportURL" = "";
+        "browser.tabs.crashReporting.sendReport" = false;
+        "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
+        "security.csp.reporting.enabled" = false;
+        "browser.contentanalysis.enabled" = false;
+        "browser.contentanalysis.default_result" = 0;
 
-        # ───────── Мусор: онбординг, Pocket, перевод, ИИ + настройки Sync ─────────
+        # ───────── Junk: onboarding, recommendations, Pocket ─────────
         "browser.aboutwelcome.enabled" = false;
         "browser.startup.homepage_override.mstone" = "ignore";
+        "browser.discovery.enabled" = false;
         "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
         "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
         "browser.preferences.moreFromMozilla" = false;
@@ -321,7 +332,13 @@ in
         "browser.uitour.url" = "";
         "browser.firefox-view.feature-tour" = false;
 
-        # Sync включён, но синхронизируются только пароли и история
+        "extensions.pocket.enabled" = false;
+        "extensions.pocket.oAuthConsumerKey" = "";
+        "extensions.pocket.api" = "";
+        "extensions.pocket.site" = "";
+        "extensions.pocket.showHome" = false;
+
+        # ───────── Sync: only passwords and history ─────────
         "services.sync.engine.passwords" = true;
         "services.sync.engine.history" = true;
         "services.sync.engine.tabs" = false;
@@ -331,25 +348,30 @@ in
         "services.sync.engine.addresses" = false;
         "services.sync.engine.creditcards" = false;
 
-        "extensions.pocket.enabled" = false;
-        "extensions.pocket.oAuthConsumerKey" = "";
-        "extensions.pocket.api" = "";
-        "extensions.pocket.site" = "";
-        "extensions.pocket.showHome" = false;
-
+        # ───────── AI features ─────────
+        # Block everything by default, then allow only the translator.
         "browser.ai.control.default" = "blocked";
-        "browser.ml.enable" = false;
+
+        # Built-in translator (the only AI feature we want)
+        "browser.translations.enable" = true;
+        "browser.ml.enable" = true;
+        "browser.ai.control.translations" = "default";
+
+        # Everything else stays off
         "browser.ml.chat.enabled" = false;
         "browser.ml.chat.menu" = false;
         "browser.ml.linkPreview.enabled" = false;
         "browser.tabs.groups.smart.enabled" = false;
 
-        # ───────── Интеграция с Wayland / видео ─────────
+        # ───────── Wayland and video ─────────
         "media.ffmpeg.vaapi.enabled" = true;
         "widget.use-xdg-desktop-portal.file-picker" = 1;
         "widget.use-xdg-desktop-portal.mime-handler" = 1;
       };
 
+      # ──────────────────────────────────────────────────────────────
+      #  SEARCH ENGINES
+      # ──────────────────────────────────────────────────────────────
       search = {
         force = true;
         default = "google";
@@ -375,6 +397,9 @@ in
         };
       };
 
+      # ──────────────────────────────────────────────────────────────
+      #  EXTENSIONS
+      # ──────────────────────────────────────────────────────────────
       extensions = {
         force = true;
 
@@ -386,13 +411,14 @@ in
           protondb-for-steam
           to-google-translate
           vimium
-          search-by-image
         ];
       };
     };
   };
 
-
+  # ══════════════════════════════════════════════════════════════════
+  #  DEFAULT BROWSER
+  # ══════════════════════════════════════════════════════════════════
   xdg.mimeApps = {
     enable = true;
 
