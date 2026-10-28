@@ -5,7 +5,6 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    grub2-themes.url = "github:vinceliuice/grub2-themes";
     nixvim.url = "github:nix-community/nixvim";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
@@ -18,7 +17,6 @@
     nixpkgs,
     home-manager,
     nixvim,
-    grub2-themes,
     ...
   } @ inputs: let
     mkHost = {
@@ -36,7 +34,6 @@
             ./modules/common.nix
             gpuModule
             ./hosts/${hostDir}/configuration.nix
-            grub2-themes.nixosModules.default
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
