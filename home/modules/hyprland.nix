@@ -58,7 +58,6 @@ in {
       hyprshot
       wl-clipboard
       cliphist
-      playerctl
     ];
   };
 }

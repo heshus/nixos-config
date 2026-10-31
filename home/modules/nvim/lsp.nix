@@ -21,7 +21,6 @@
 
     # General tooling
     ripgrep
-    fd
   ];
 
   programs.nixvim = {

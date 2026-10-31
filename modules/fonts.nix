@@ -2,10 +2,8 @@
 {
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
-    nerd-fonts.fira-code
-    nerd-fonts.symbols-only   
+    nerd-fonts.symbols-only
     roboto
-    ibm-plex
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-color-emoji

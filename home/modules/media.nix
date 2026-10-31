@@ -2,11 +2,8 @@
 {
   home.packages = with pkgs; [
     yt-dlp
-    ffmpeg
-    imagemagick
     imv
     playerctl
-    ffmpegthumbnailer
   ];
 
   programs.mpv = {

@@ -40,8 +40,8 @@
       lt = "eza --tree --level=2 --icons=auto";
       ltt = "eza --tree --icons=auto";
       df = "duf";
-      rebuild = "nh os switch -- --impure";
-      update = "nh os switch --update -- --impure";
+      rebuild = "nh os switch";
+      update = "nh os switch --update";
     };
 
     # Функции и всё что не укладывается в готовые опции
@@ -94,9 +94,7 @@
     duf
     yazi
     zellij
-    fastfetch
     fd
-    mpv
     gdu
     dust
   ];

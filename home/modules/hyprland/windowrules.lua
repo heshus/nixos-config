@@ -38,12 +38,3 @@ hl.window_rule({
     center = true,
     size = { 1080, 920 },
 })
--- Steam notifications
-hl.window_rule({
-    match = {
-        class = "^steam$",
-        title = "^(?!Steam$).+",
-    },
-    float = true,
-    pin = true,
-})

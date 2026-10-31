@@ -24,10 +24,7 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  fileSystems."/mnt/transfer2" =
-    { device = "/dev/disk/by-uuid/f99d4c34-e7f0-4bbf-934b-bc5d32f43b3c";
-      fsType = "ext4";
-    };
+
 
   swapDevices = [ ];
 
