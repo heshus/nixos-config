@@ -3,7 +3,7 @@
     ./packages.nix
     ./zsh.nix
     ./cursor.nix
-    ./niri.nix
+    ./hyprland.nix
     ./gtk.nix
     ./fastfetch.nix
     ./media.nix

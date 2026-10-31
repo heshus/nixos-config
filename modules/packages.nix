@@ -7,7 +7,6 @@
     gcc
     gnumake
     pkg-config
-    zellij
     xwayland-satellite
     vim
     wget

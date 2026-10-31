@@ -32,7 +32,6 @@
     shellAliases = {
       nv = "nvim";
       mz = "zellij attach -c main";
-      clock = "tty-clock -c";
       mpv = "noglob mpv";
       cat = "bat -pp";
       ls = "eza --icons=auto";
@@ -40,7 +39,6 @@
       la = "eza -lah --icons=auto --git";
       lt = "eza --tree --level=2 --icons=auto";
       ltt = "eza --tree --icons=auto";
-      cow = "fortune | cowsay | lolcat";
       df = "duf";
       rebuild = "nh os switch -- --impure";
       update = "nh os switch --update -- --impure";
@@ -93,13 +91,9 @@
   home.packages = with pkgs; [
     bat
     eza
-    fortune
-    cowsay
-    lolcat
     duf
     yazi
     zellij
-    tty-clock
     fastfetch
     fd
     mpv

@@ -1,28 +1,21 @@
-{ pkgs,... }:
 {
+  pkgs,
+  inputs,
+  ...
+}: {
   i18n.defaultLocale = "ru_RU.UTF-8";
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    package =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
 
-  programs.niri.enable = true;
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+  };
+  services.displayManager.noctalia-greeter.enable = true;
   programs.noctalia = {
-  enable = true;
-
-};
-
-
-  environment.systemPackages = with pkgs; [
-   ffmpeg-headless
-   ffmpegthumbnailer
-   gdk-pixbuf
-
-  libheif
-  libheif.out
-  libavif
-  libjxl
-  webp-pixbuf-loader
-];
-  services.gvfs.enable = true;
-  services.udisks2.enable = true;
-  environment.pathsToLink = [
-  "share/thumbnailers"
-];
+    enable = true;
+    recommendedServices.enable = true;
+  };
 }
