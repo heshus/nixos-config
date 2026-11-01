@@ -37,7 +37,6 @@ in {
 
       plugins = [
         inputs.hypr-dynamic-cursors.packages.${system}.hypr-dynamic-cursors
-        inputs.hyprspace.packages.${system}.Hyprspace
       ];
 
       extraLuaFiles = {
@@ -48,7 +47,6 @@ in {
         "20-animations" = ./hyprland/animations.lua;
         "40-windowrules" = ./hyprland/windowrules.lua;
         "50-layout" = ./hyprland/layout.lua;
-        "55-hyprspace" = ./hyprland/hyprspace.lua;
         "60-binds" = ./hyprland/binds.lua;
         "80-autostart" = ./hyprland/autostart.lua;
       };

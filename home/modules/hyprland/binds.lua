@@ -3,40 +3,39 @@ local mod = "SUPER"
 -- Layout helpers ------------------------------------------------------------
 
 local function is_scrolling()
-    local workspace = hl.get_active_special_workspace()
-        or hl.get_active_workspace()
+	local workspace = hl.get_active_special_workspace() or hl.get_active_workspace()
 
-    return workspace and workspace.tiled_layout == "scrolling"
+	return workspace and workspace.tiled_layout == "scrolling"
 end
 
 -- Runs a scrolling-layout message only on scrolling workspaces,
 -- so these binds do nothing (instead of erroring) on dwindle workspaces.
 local function scrolling_msg(msg)
-    return function()
-        if is_scrolling() then
-            hl.dispatch(hl.dsp.layout(msg))
-        end
-    end
+	return function()
+		if is_scrolling() then
+			hl.dispatch(hl.dsp.layout(msg))
+		end
+	end
 end
 
 -- direction: "l" or "r"
 local function focus_horizontal(direction)
-    if is_scrolling() then
-        hl.dispatch(hl.dsp.layout("focus " .. direction))
-    else
-        hl.dispatch(hl.dsp.focus({ direction = direction }))
-    end
+	if is_scrolling() then
+		hl.dispatch(hl.dsp.layout("focus " .. direction))
+	else
+		hl.dispatch(hl.dsp.focus({ direction = direction }))
+	end
 end
 
 -- direction: "l" or "r"
 -- scrolling: swap the column with its neighbour (niri: move-column-left/right)
 -- dwindle:   move the window in that direction
 local function move_column(direction)
-    if is_scrolling() then
-        hl.dispatch(hl.dsp.layout("swapcol " .. direction))
-    else
-        hl.dispatch(hl.dsp.window.move({ direction = direction }))
-    end
+	if is_scrolling() then
+		hl.dispatch(hl.dsp.layout("swapcol " .. direction))
+	else
+		hl.dispatch(hl.dsp.window.move({ direction = direction }))
+	end
 end
 
 -- Applications ----------------------------------------------------------------
@@ -57,20 +56,36 @@ hl.bind(mod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mod .. " + D", hl.dsp.window.fullscreen({ mode = "maximized" }))
 
 -- Focus --------------------------------------------------------------------------
-hl.bind(mod .. " + H", function() focus_horizontal("l") end)
-hl.bind(mod .. " + L", function() focus_horizontal("r") end)
-hl.bind(mod .. " + LEFT", function() focus_horizontal("l") end)
-hl.bind(mod .. " + RIGHT", function() focus_horizontal("r") end)
+hl.bind(mod .. " + H", function()
+	focus_horizontal("l")
+end)
+hl.bind(mod .. " + L", function()
+	focus_horizontal("r")
+end)
+hl.bind(mod .. " + LEFT", function()
+	focus_horizontal("l")
+end)
+hl.bind(mod .. " + RIGHT", function()
+	focus_horizontal("r")
+end)
 hl.bind(mod .. " + J", hl.dsp.focus({ direction = "d" }))
 hl.bind(mod .. " + K", hl.dsp.focus({ direction = "u" }))
 hl.bind(mod .. " + DOWN", hl.dsp.focus({ direction = "d" }))
 hl.bind(mod .. " + UP", hl.dsp.focus({ direction = "u" }))
 
 -- Move windows / columns ----------------------------------------------------------
-hl.bind(mod .. " + SHIFT + H", function() move_column("l") end)
-hl.bind(mod .. " + SHIFT + L", function() move_column("r") end)
-hl.bind(mod .. " + SHIFT + LEFT", function() move_column("l") end)
-hl.bind(mod .. " + SHIFT + RIGHT", function() move_column("r") end)
+hl.bind(mod .. " + SHIFT + H", function()
+	move_column("l")
+end)
+hl.bind(mod .. " + SHIFT + L", function()
+	move_column("r")
+end)
+hl.bind(mod .. " + SHIFT + LEFT", function()
+	move_column("l")
+end)
+hl.bind(mod .. " + SHIFT + RIGHT", function()
+	move_column("r")
+end)
 hl.bind(mod .. " + SHIFT + J", hl.dsp.window.move({ direction = "d" }))
 hl.bind(mod .. " + SHIFT + K", hl.dsp.window.move({ direction = "u" }))
 hl.bind(mod .. " + SHIFT + DOWN", hl.dsp.window.move({ direction = "d" }))
@@ -78,8 +93,8 @@ hl.bind(mod .. " + SHIFT + UP", hl.dsp.window.move({ direction = "u" }))
 
 -- Workspaces 1-9 ---------------------------------------------------------------------
 for i = 1, 9 do
-    hl.bind(mod .. " + " .. i, hl.dsp.focus({ workspace = i }))
-    hl.bind(mod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
+	hl.bind(mod .. " + " .. i, hl.dsp.focus({ workspace = i }))
+	hl.bind(mod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
 end
 
 -- Relative workspace navigation, including empty workspaces.
@@ -125,15 +140,12 @@ hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("noctalia msg media toggle"))
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"))
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"))
 
--- Hyprspace workspace overview
-hl.bind("SUPER + TAB", function()
-    hl.plugin.overview.toggle("all")
-end)
+
 
 -- Screenshots (the directory is created in autostart.lua) -------------------------------
 local screenshot_dir = "$HOME/Pictures/Screenshots"
 local function screenshot(mode)
-    return hl.dsp.exec_cmd("hyprshot -m " .. mode .. " -o " .. screenshot_dir)
+	return hl.dsp.exec_cmd("hyprshot -m " .. mode .. " -o " .. screenshot_dir)
 end
 
 hl.bind("Print", screenshot("output"))
@@ -144,9 +156,9 @@ hl.bind("XF86Launch1", screenshot("output"))
 -- Turn monitors off; keyboard/mouse activity wakes them again.
 -- A short timer is recommended by the wiki so the key release does not wake it instantly.
 hl.bind(mod .. " + SHIFT + P", function()
-    hl.timer(function()
-        hl.dispatch(hl.dsp.dpms({ action = "disable" }))
-    end, { timeout = 500, type = "oneshot" })
+	hl.timer(function()
+		hl.dispatch(hl.dsp.dpms({ action = "disable" }))
+	end, { timeout = 500, type = "oneshot" })
 end)
 
 -- Miscellaneous

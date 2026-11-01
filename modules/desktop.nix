@@ -3,6 +3,8 @@
   inputs,
   ...
 }: {
+
+  services.gvfs.enable = true;
   i18n.defaultLocale = "ru_RU.UTF-8";
   programs.hyprland = {
     enable = true;
