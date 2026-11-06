@@ -48,6 +48,7 @@ in {
         "40-windowrules" = ./hyprland/windowrules.lua;
         "50-layout" = ./hyprland/layout.lua;
         "60-binds" = ./hyprland/binds.lua;
+        "70-gamemode" = ./hyprland/gamemode.lua;
         "80-autostart" = ./hyprland/autostart.lua;
       };
     };

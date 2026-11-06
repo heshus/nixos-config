@@ -180,9 +180,7 @@ in
         "browser.download.open_pdf_attachments_inline" = true;
         "pdfjs.enableScripting" = false;
         "browser.download.useDownloadDir" = true; # save to Downloads, don't ask
-        "browser.download.alwaysOpenPanel" = false;
-        "browser.download.always_ask_before_handling_new_types" = false;
-        "browser.download.autohideButton" = false;
+        "browser.download.alwaysOpenPanel" = true;
         "browser.download.manager.addToRecentDocs" = false;
         "browser.helperApps.deleteTempFileOnExit" = true;
 
